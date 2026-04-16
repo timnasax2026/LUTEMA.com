@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA Jr - Aviator Predator Predictor</title>
+    <title>LUTEMA Jr - AVIATOR PREDATOR PRO</title>
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-black: #050505;
             --predator-red: #ff0000;
+            --dark-black: #050505;
+            --glass-bg: rgba(0, 0, 0, 0.85);
         }
 
         body, html {
@@ -16,51 +17,59 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--dark-black);
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: var(--dark-black);
             color: var(--neon-green);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 1.5s ease-in-out;
+            overflow: hidden;
             background-size: cover;
             background-position: center;
+            transition: background 1.5s ease-in-out;
         }
 
-        /* Overlay */
-        .overlay {
+        /* Background Overlay */
+        .overlay-dark {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 1;
         }
 
-        .main-container {
+        .main-wrapper {
             position: relative;
             z-index: 10;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Auth/Login Box */
+        .auth-box {
+            background: var(--glass-bg);
+            padding: 40px;
             border: 2px solid var(--neon-green);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
             border-radius: 15px;
-            box-shadow: 0 0 30px var(--neon-green);
             width: 90%;
-            max-width: 450px;
+            max-width: 400px;
             text-align: center;
         }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px var(--neon-green);
+        /* Predictor Dashboard */
+        .dashboard {
+            display: none; /* Inafichwa mpaka login ikamilike */
+            background: var(--glass-bg);
+            padding: 30px;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            border-radius: 20px;
+            width: 95%;
+            max-width: 500px;
+            text-align: center;
         }
 
-        .subtitle {
-            color: var(--predator-red);
-            font-weight: bold;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-        }
+        h1 { font-size: 1.5rem; margin-bottom: 5px; color: #fff; letter-spacing: 3px; }
+        .red-tag { color: var(--predator-red); font-weight: bold; margin-bottom: 20px; }
 
         input, select {
             width: 100%;
@@ -70,145 +79,190 @@
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
             border-radius: 5px;
-            font-family: inherit;
             box-sizing: border-box;
+            outline: none;
         }
 
-        .btn-predict {
+        .btn-start {
             width: 100%;
             padding: 15px;
             background: var(--neon-green);
             color: black;
-            border: none;
             font-weight: bold;
-            text-transform: uppercase;
+            border: none;
             cursor: pointer;
+            text-transform: uppercase;
             border-radius: 5px;
-            transition: 0.3s;
         }
 
-        .btn-predict:hover {
-            box-shadow: 0 0 20px var(--neon-green);
-            transform: scale(1.02);
-        }
-
-        /* Prediction Result */
-        #prediction-box {
-            margin-top: 25px;
+        /* Signal Elements */
+        .signal-display {
             padding: 20px;
-            border: 1px dashed var(--neon-green);
-            display: none;
+            border: 2px dashed var(--neon-green);
+            margin: 20px 0;
             background: rgba(0, 255, 65, 0.05);
         }
 
-        .loading-text {
-            color: white;
-            font-style: italic;
-        }
-
-        .result-value {
-            font-size: 2.5rem;
-            color: var(--predator-red);
-            margin: 10px 0;
+        .multiplier {
+            font-size: 3.5rem;
             font-weight: bold;
+            color: var(--predator-red);
+            text-shadow: 0 0 15px var(--predator-red);
+            margin: 10px 0;
         }
 
-        .time-value {
-            font-size: 1.2rem;
-            color: white;
+        .status-text { color: #fff; font-size: 0.9rem; margin-bottom: 10px; }
+        
+        .timer-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            margin-top: 15px;
+        }
+        .progress {
+            height: 100%;
+            background: var(--neon-green);
+            width: 100%;
+            transition: width 20s linear;
         }
 
-        footer {
-            margin-top: 20px;
-            font-size: 0.7rem;
-            opacity: 0.6;
+        .user-info-bar {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
         }
     </style>
 </head>
 <body id="bg-slider">
-    <div class="overlay"></div>
+    <div class="overlay-dark"></div>
 
-    <div class="main-container">
-        <h1>LUTEMA Jr</h1>
-        <div class="subtitle">AVIATOR PREDATOR</div>
-
-        <div id="form-section">
-            <input type="text" id="phone" placeholder="Ingiza Namba ya Simu">
-            <input type="text" id="company" placeholder="Ingiza Kampuni (Mf: Betika)">
-            <button class="btn-predict" onclick="startPrediction()">Predict Next Round</button>
+    <div class="main-wrapper">
+        <div class="auth-box" id="authBox">
+            <h1>LUTEMA JR</h1>
+            <div class="red-tag">PREDATOR LOGIN</div>
+            <input type="text" id="username" placeholder="Username (Mf: Lutema_01)">
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="countryCode" placeholder="+255" style="width: 30%;">
+                <input type="text" id="phoneNumber" placeholder="784XXXXXX" style="width: 70%;">
+            </div>
+            <select id="companySelect">
+                <option value="">-- Chagua Kampuni --</option>
+                <option value="Betika">Betika</option>
+                <option value="Gal Sport">Gal Sport</option>
+                <option value="Premier Bet">Premier Bet</option>
+                <option value="Wasafi Bet">Wasafi Bet</option>
+                <option value="888Bet">888Bet</option>
+                <option value="SportyBet">SportyBet</option>
+            </select>
+            <button class="btn-start" onclick="login()">ACTIVATE SYSTEM</button>
         </div>
 
-        <div id="prediction-box">
-            <div id="loading" class="loading-text">Connecting to Server...</div>
-            <div id="result-content" style="display: none;">
-                <div>NEXT ROUND PREDICTION:</div>
-                <div class="result-value" id="next-x">--</div>
-                <div class="time-value">Muda: <span id="next-time">--</span></div>
-                <p style="font-size: 0.8rem; color: #888; margin-top: 15px;">Target detected! Withdraw on time.</p>
+        <div class="dashboard" id="dashboard">
+            <div class="user-info-bar" id="userInfo">
+                </div>
+            <h1>PREDATOR ENGINE</h1>
+            <div class="status-text" id="engineStatus">Scanning Market Algorithms...</div>
+
+            <div class="signal-display">
+                <div style="font-size: 0.8rem;">NEXT ROUND ODDS</div>
+                <div class="multiplier" id="multiplier">--</div>
+                <div id="targetTime" style="color: #fff;">Wait for Signal...</div>
+                
+                <div class="timer-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+            </div>
+
+            <div style="font-size: 0.7rem; color: #555;">
+                System: <strong>AUTOMATIC MODE</strong> | Namba: +255784766591
             </div>
         </div>
-
-        <footer>
-            &copy; 2026 LUTEMA Jr Predator Algorithm | +255784766591
-        </footer>
     </div>
 
     <script>
-        // Wallpapers changing every 30 seconds
+        // Wallpapers
         const wallpapers = [
             'https://wallpaperaccess.com/full/1567665.jpg',
             'https://wallpaperaccess.com/full/2454504.jpg',
             'https://wallpaperaccess.com/full/1892751.jpg'
         ];
-
-        let bgIndex = 0;
-        const body = document.getElementById('bg-slider');
-
-        function changeBg() {
-            body.style.backgroundImage = `url('${wallpapers[bgIndex]}')`;
-            bgIndex = (bgIndex + 1) % wallpapers.length;
+        let bgIdx = 0;
+        function slideBg() {
+            document.getElementById('bg-slider').style.backgroundImage = `url('${wallpapers[bgIdx]}')`;
+            bgIdx = (bgIdx + 1) % wallpapers.length;
         }
-        setInterval(changeBg, 30000);
-        changeBg();
+        setInterval(slideBg, 30000);
+        slideBg();
 
-        // Prediction Logic
-        function startPrediction() {
-            const phone = document.getElementById('phone').value;
-            const company = document.getElementById('company').value;
+        // Login Logic
+        function login() {
+            const user = document.getElementById('username').value;
+            const code = document.getElementById('countryCode').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const company = document.getElementById('companySelect').value;
 
-            if(!phone || !company) {
-                alert("Tafadhali jaza namba na kampuni!");
+            if(!user || !phone || !company) {
+                alert("Tafadhali jaza taarifa zote!");
                 return;
             }
 
-            // Show box and loading
-            document.getElementById('prediction-box').style.display = 'block';
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('result-content').style.display = 'none';
+            document.getElementById('authBox').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('userInfo').innerText = `USER: ${user} | CAMP: ${company} | STATUS: ENCRYPTED`;
+            
+            startAutoSignals();
+        }
 
-            // Fake processing time
+        // Automatic Signal System
+        function startAutoSignals() {
+            generateSignal(); // First one
+            
+            // Loop every 20 seconds
+            setInterval(() => {
+                generateSignal();
+            }, 20000);
+        }
+
+        function generateSignal() {
+            const multiplierEl = document.getElementById('multiplier');
+            const statusEl = document.getElementById('engineStatus');
+            const timeEl = document.getElementById('targetTime');
+            const progress = document.getElementById('progressBar');
+
+            // Reset progress bar animation
+            progress.style.transition = 'none';
+            progress.style.width = '0%';
+            
+            statusEl.innerText = "CALCULATING NEXT ROUND...";
+            multiplierEl.innerText = "....";
+            
             setTimeout(() => {
-                document.getElementById('loading').innerText = "Analyzing " + company + " Data...";
+                // Logic ya kupata odds (Uhalisia: odds za chini ni nyingi, za juu ni chache)
+                let chance = Math.random();
+                let odds;
+                if(chance > 0.9) odds = (Math.random() * (50.0 - 10.0) + 10.0).toFixed(2); // Big win
+                else if(chance > 0.7) odds = (Math.random() * (10.0 - 3.0) + 3.0).toFixed(2); // Mid win
+                else odds = (Math.random() * (3.0 - 1.2) + 1.2).toFixed(2); // Low win
+
+                multiplierEl.innerText = odds + "X";
+                statusEl.innerText = "SIGNAL DETECTED!";
                 
+                // Get time for the next round (Current time + random seconds)
+                const now = new Date();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = (now.getSeconds() + 5).toString().padStart(2, '0');
+                timeEl.innerText = `Raundi Inaanza: ${minutes}:${seconds}`;
+
+                // Restart progress bar for 20 seconds
                 setTimeout(() => {
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('result-content').style.display = 'block';
-                    
-                    // Generate random prediction
-                    const randomX = (Math.random() * (10.0 - 1.5) + 1.5).toFixed(2) + "X";
-                    
-                    // Get current time + some seconds for next round
-                    const now = new Date();
-                    now.setSeconds(now.getSeconds() + Math.floor(Math.random() * 60) + 10);
-                    
-                    const minutes = now.getMinutes().toString().padStart(2, '0');
-                    const seconds = now.getSeconds().toString().padStart(2, '0');
-                    
-                    document.getElementById('next-x').innerText = randomX;
-                    document.getElementById('next-time').innerText = minutes + ":" + seconds;
-                    
-                }, 2000);
-            }, 1500);
+                    progress.style.transition = 'width 20s linear';
+                    progress.style.width = '100%';
+                }, 100);
+
+            }, 2000);
         }
     </script>
 </body>
