@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA JR | PREDATOR AI v6.0</title>
+    <title>LUTEMA JR | SECURE PREDATOR AI</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
 
@@ -36,50 +36,53 @@
 
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
             padding: 35px;
-            width: 100%; max-width: 480px;
+            width: 100%; max-width: 420px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
-        .tagline { font-size: 0.7rem; letter-spacing: 3px; color: var(--predator-red); margin-bottom: 25px; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); }
+        .tagline { font-size: 0.7rem; letter-spacing: 3px; color: var(--predator-red); margin-bottom: 25px; font-weight: bold; }
 
         input, select {
             width: 100%; padding: 14px; margin-bottom: 15px;
-            background: rgba(0,0,0,0.6); border: 1px solid var(--cyber-blue);
-            color: white; border-radius: 12px; font-family: inherit; box-sizing: border-box;
+            background: rgba(0,0,0,0.7); border: 1px solid var(--cyber-blue);
+            color: white; border-radius: 12px; font-family: inherit; font-size: 1rem;
+            box-sizing: border-box; outline: none; text-align: center;
         }
 
         .btn-glow {
             width: 100%; padding: 18px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
             border: none; border-radius: 12px; color: black; font-weight: 700;
-            text-transform: uppercase; cursor: pointer; letter-spacing: 2px;
+            text-transform: uppercase; cursor: pointer; letter-spacing: 2px; transition: 0.3s;
         }
 
+        .btn-glow:hover { box-shadow: 0 0 20px var(--neon-green); transform: translateY(-2px); }
+
+        /* Sections Control */
+        #verify-section, #dashboard, #welcome-screen { display: none; }
+
         /* Dashboard Items */
-        #dashboard { display: none; }
         .main-display {
             border: 2px solid var(--neon-green); border-radius: 20px;
             padding: 25px; margin: 20px 0; background: rgba(0, 255, 157, 0.05);
         }
 
-        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 3.8rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
+        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
 
-        .time-box { font-size: 1.2rem; color: #fff; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .time-box { font-size: 1.1rem; color: #fff; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 8px; border: 1px solid var(--cyber-blue); }
 
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .info-item { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); }
-        .info-item h4 { margin: 0 0 8px 0; color: var(--cyber-blue); font-size: 0.7rem; }
+        .info-item { background: rgba(0,0,0,0.5); padding: 10px; border-radius: 12px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); text-align: left; }
+        .info-item h4 { margin: 0 0 5px 0; color: var(--cyber-blue); font-size: 0.65rem; }
 
-        .hist-val { display: block; margin-bottom: 4px; color: var(--neon-green); }
+        .hist-val { display: block; color: var(--neon-green); font-size: 0.9rem; }
 
-        /* Loader */
-        #welcome-screen { display: none; }
-        .loader { width: 40px; height: 40px; border: 4px solid #111; border-top: 4px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+        .loader { width: 35px; height: 35px; border: 4px solid #111; border-top: 4px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -89,42 +92,49 @@
     <div class="container">
         <div class="glass-card" id="login-card">
             <h1>LUTEMA JR</h1>
-            <div class="tagline">ULTIMATE PREDATOR AI</div>
-            <input type="text" id="username" placeholder="Username / Jina">
-            <input type="text" id="phone" placeholder="Namba ya Simu (+255...)">
+            <div class="tagline">PREDATOR AI SYSTEM</div>
+            <input type="text" id="username" placeholder="Full Name">
+            <input type="text" id="phone" placeholder="Phone Number (e.g. 0784...)">
             <select id="company">
-                <option value="">-- Chagua Kampuni --</option>
+                <option value="">-- Choose Platform --</option>
                 <option value="Betika">BETIKA</option>
                 <option value="Gal Sport">GAL SPORT</option>
                 <option value="Premier Bet">PREMIER BET</option>
-                <option value="Wasafi Bet">WASAFI BET</option>
-                <option value="888Bet">888BET</option>
+                <option value="SportyBet">SPORTYBET</option>
             </select>
-            <button class="btn-glow" onclick="startApp()">UNGANISHA MFUMO</button>
+            <button class="btn-glow" onclick="showVerify()">REQUEST ACCESS CODE</button>
+        </div>
+
+        <div class="glass-card" id="verify-section">
+            <h2 style="color: var(--neon-green);">VERIFICATION</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 20px;">A verification code was sent to <br><span id="sent-phone" style="color: var(--cyber-blue);"></span></p>
+            <input type="password" id="pin" placeholder="ENTER 6-DIGIT PIN" maxlength="6">
+            <button class="btn-glow" onclick="validatePin()">VERIFY & LOGIN</button>
+            <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.6;">Hint: Check your SMS or use 123456</p>
         </div>
 
         <div class="glass-card" id="welcome-screen">
             <h1 id="welcome-msg">WELCOME</h1>
-            <p>Inatafuta Signal za <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
+            <p>Syncing encrypted data for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
             <div class="loader"></div>
-            <p style="font-size: 0.7rem; opacity: 0.6;">SERVER STATUS: ENCRYPTED</p>
+            <p style="font-size: 0.7rem; opacity: 0.6;">AUTH TOKEN: VALIDATED</p>
         </div>
 
         <div class="glass-card" id="dashboard">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 15px; opacity: 0.7;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 10px; opacity: 0.8;">
                 <span id="user-display"></span>
                 <span id="comp-display" style="color: var(--cyber-blue);"></span>
             </div>
 
             <div class="main-display">
-                <div style="font-size: 0.7rem; letter-spacing: 2px;">LIVE PREDICTION</div>
+                <div style="font-size: 0.7rem; letter-spacing: 2px;">LIVE PREDATOR ODDS</div>
                 <div class="multiplier" id="current-x">SCANNING</div>
                 <div class="time-box" id="next-time">SYNCING...</div>
             </div>
 
             <div class="info-grid">
                 <div class="info-item">
-                    <h4>PAST RESULTS</h4>
+                    <h4>HISTORY</h4>
                     <div id="hist-list"></div>
                 </div>
                 <div class="info-item">
@@ -134,7 +144,7 @@
             </div>
 
             <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4;">
-                PREDATOR v6.0 | SECURE LINE: +255784766591
+                PROTECTED BY LUTEMA AI | +255784766591
             </p>
         </div>
     </div>
@@ -155,14 +165,29 @@
         let upcoming = [];
         let history = [];
 
-        function startApp() {
+        function showVerify() {
             const name = document.getElementById('username').value;
+            const phone = document.getElementById('phone').value;
             const comp = document.getElementById('company').value;
-            if(!name || !comp) return alert("Jaza Jina na Chagua Kampuni!");
+
+            if(!name || !phone || !comp) return alert("Please fill all fields!");
 
             document.getElementById('login-card').style.display = 'none';
+            document.getElementById('sent-phone').innerText = phone;
+            document.getElementById('verify-section').style.display = 'block';
+        }
+
+        function validatePin() {
+            const pin = document.getElementById('pin').value;
+            if(pin.length < 4) return alert("Enter a valid code!");
+
+            // Transition to Welcome
+            document.getElementById('verify-section').style.display = 'none';
             document.getElementById('welcome-screen').style.display = 'block';
-            document.getElementById('welcome-msg').innerText = `HELLO, ${name.toUpperCase()}`;
+            
+            const name = document.getElementById('username').value;
+            const comp = document.getElementById('company').value;
+            document.getElementById('welcome-msg').innerText = `WELCOME, ${name.toUpperCase()}`;
             document.getElementById('target-comp').innerText = comp;
 
             setTimeout(() => {
@@ -171,20 +196,18 @@
                 document.getElementById('user-display').innerText = `👤 ${name}`;
                 document.getElementById('comp-display').innerText = `🎰 ${comp}`;
                 
-                for(let i=0; i<3; i++) upcoming.push(generatePredatorX());
+                for(let i=0; i<3; i++) upcoming.push(genX());
                 updateUI();
                 engine();
-            }, 3500);
+            }, 3000);
         }
 
-        // Realistic Odds Generator
-        function generatePredatorX() {
+        function genX() {
             let r = Math.random();
-            if(r > 0.995) return (Math.random() * 500 + 500).toFixed(2) + "x"; // 500x to 1000x
-            if(r > 0.98) return (Math.random() * 400 + 100).toFixed(2) + "x"; // 100x to 500x
-            if(r > 0.95) return (Math.random() * 50 + 50).toFixed(2) + "x";  // 50x to 100x
-            if(r > 0.85) return (Math.random() * 10 + 2).toFixed(2) + "x";   // 2x to 12x
-            return (Math.random() * 1.5 + 1.01).toFixed(2) + "x";            // 1x to 2.5x
+            if(r > 0.99) return (Math.random() * 500 + 500).toFixed(2) + "x";
+            if(r > 0.95) return (Math.random() * 100 + 50).toFixed(2) + "x";
+            if(r > 0.8) return (Math.random() * 10 + 2).toFixed(2) + "x";
+            return (Math.random() * 1.5 + 1.01).toFixed(2) + "x";
         }
 
         function updateUI() {
@@ -197,25 +220,20 @@
             const displayTime = document.getElementById('next-time');
             
             let targetX = upcoming.shift();
-            upcoming.push(generatePredatorX());
+            upcoming.push(genX());
 
-            displayX.innerText = "---";
+            displayX.innerText = "WAIT";
             displayX.style.color = "white";
-            displayTime.innerText = "READY FOR NEXT";
 
-            // Muda halisi wa kutoa signal
             setTimeout(() => {
                 displayX.innerText = targetX;
                 displayX.style.color = "var(--predator-red)";
                 
                 const now = new Date();
-                // Tunaonyesha muda kamili wa mzunguko huu
-                displayTime.innerText = `TIME: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                displayTime.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
                 
                 history.push(targetX);
                 updateUI();
-
-                // Mzunguko unaofuata baada ya sekunde 15 sawa na muda wa aviator
                 setTimeout(engine, 15000); 
             }, 3000);
         }
