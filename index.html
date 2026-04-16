@@ -1,182 +1,148 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA Jr - AVIATOR PREDATOR ULTIMATE</title>
+    <title>LUTEMA JR | PREDATOR AI v5.0</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
+
         :root {
-            --neon-green: #00ff41;
-            --predator-red: #ff0000;
-            --dark-black: #050505;
-            --glass: rgba(0, 0, 0, 0.9);
+            --neon-green: #00ff9d;
+            --predator-red: #ff3e3e;
+            --cyber-blue: #00d4ff;
+            --dark-bg: #020b10;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Consolas', monospace;
-            background: var(--dark-black);
-            color: var(--neon-green);
-            background-size: cover;
-            background-position: center;
-            transition: background 1.5s ease-in-out;
-            overflow-x: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: white; overflow: hidden;
+            background-size: cover; background-position: center;
+            transition: background 2s ease;
         }
 
         .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(2,11,16,1) 100%);
             z-index: 1;
         }
 
-        .wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            min-height: 100vh;
+        .container {
+            position: relative; z-index: 10;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px;
         }
 
-        /* Login Box */
-        .auth-card {
-            background: var(--glass);
-            padding: 30px;
-            border: 2px solid var(--neon-green);
-            border-radius: 15px;
-            width: 100%;
-            max-width: 400px;
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%; max-width: 450px;
             text-align: center;
-            align-self: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
-        /* Main Predictor Dashboard */
-        .dashboard {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            background: var(--glass);
-            border: 1px solid var(--neon-green);
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        h1 { font-size: 1.4rem; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
-        .red-blink { color: var(--predator-red); animation: blink 1s infinite; font-weight: bold; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
+        .tagline { font-size: 0.8rem; letter-spacing: 5px; color: var(--predator-red); margin-bottom: 30px; font-weight: bold; }
 
         input, select {
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            background: #000; border: 1px solid var(--neon-green);
-            color: var(--neon-green); border-radius: 5px; box-sizing: border-box;
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--cyber-blue);
+            color: white; border-radius: 12px; font-family: inherit; font-size: 1rem;
+            box-sizing: border-box; transition: 0.3s;
         }
 
-        .btn {
-            width: 100%; padding: 15px; background: var(--neon-green);
-            color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 5px;
+        input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); outline: none; }
+
+        .btn-glow {
+            width: 100%; padding: 18px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
+            border: none; border-radius: 12px; color: black; font-weight: 700;
+            text-transform: uppercase; cursor: pointer; letter-spacing: 2px; transition: 0.4s;
         }
 
-        /* Signal Layout */
-        .main-signal {
-            text-align: center;
-            border: 2px solid var(--neon-green);
-            padding: 30px;
-            margin: 20px 0;
-            background: rgba(0, 255, 65, 0.05);
-            border-radius: 10px;
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 157, 0.4); }
+
+        /* Dashboard Styles */
+        #dashboard { display: none; }
+        .main-display {
+            border: 2px solid var(--neon-green); border-radius: 20px;
+            padding: 30px; margin: 25px 0; background: rgba(0, 255, 157, 0.02);
+            position: relative; overflow: hidden;
         }
 
-        .multiplier { font-size: 4rem; font-weight: bold; color: var(--predator-red); margin: 10px 0; }
+        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 4.5rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
 
-        /* History & Upcoming */
-        .rounds-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
+        /* Grid for Info */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .info-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; font-size: 0.8rem; border-bottom: 2px solid var(--cyber-blue); }
+        .info-item h4 { margin: 0 0 10px 0; color: var(--cyber-blue); font-size: 0.7rem; text-transform: uppercase; }
 
-        .round-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-        }
+        .history-val { color: var(--neon-green); display: block; margin-bottom: 5px; }
 
-        .round-box h3 { font-size: 0.9rem; margin-top: 0; color: var(--neon-green); border-bottom: 1px solid #333; }
-
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px solid #222;
-        }
-
-        .val-history { color: #ff00ff; } /* Rangi ya History */
-        .val-upcoming { color: #00ffff; } /* Rangi ya Upcoming */
-
-        .timer-line {
-            width: 100%; height: 3px; background: #222; margin-top: 10px;
-        }
-        .progress-line { height: 100%; background: var(--neon-green); width: 0%; }
+        /* Welcome Screen Animation */
+        #welcome-screen { display: none; text-align: center; }
+        .loader { width: 50px; height: 50px; border: 5px solid #111; border-top: 5px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body id="bg-slider">
+<body id="bg">
     <div class="overlay"></div>
 
-    <div class="wrapper">
-        <div class="auth-card" id="authBox">
+    <div class="container">
+        <div class="glass-card" id="login-card">
             <h1>LUTEMA JR</h1>
-            <div class="red-blink">PREDATOR ULTIMATE v4.0</div>
-            <p style="font-size: 0.8rem;">Enter credentials to sync signals</p>
-            <input type="text" id="user" placeholder="Username">
-            <div style="display: flex; gap: 5px;">
-                <input type="text" id="code" value="+255" style="width: 30%;">
-                <input type="text" id="phone" placeholder="784XXXXXX" style="width: 70%;">
-            </div>
-            <select id="camp">
-                <option value="Betika">Betika</option>
-                <option value="Gal Sport">Gal Sport</option>
-                <option value="Premier Bet">Premier Bet</option>
-                <option value="Wasafi Bet">Wasafi Bet</option>
+            <div class="tagline">PREDATOR AI</div>
+            <input type="text" id="username" placeholder="Username / Display Name">
+            <input type="text" id="phone" placeholder="Phone Number (+255...)">
+            <select id="company">
+                <option value="">Select Platform</option>
+                <option value="Betika">BETIKA</option>
+                <option value="Gal Sport">GAL SPORT</option>
+                <option value="Premier Bet">PREMIER BET</option>
+                <option value="SportyBet">SPORTYBET</option>
+                <option value="Wasafi Bet">WASAFI BET</option>
             </select>
-            <button class="btn" onclick="activate()">ACTIVATE SYSTEM</button>
+            <button class="btn-glow" onclick="startApp()">ACCESS SYSTEM</button>
         </div>
 
-        <div class="dashboard" id="dash">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #888;">
-                <span id="displayUser"></span>
-                <span id="displayCamp"></span>
-            </div>
-            
-            <div class="main-signal">
-                <div style="font-size: 0.9rem; letter-spacing: 2px;">ACTIVE PREDICTION</div>
-                <div class="multiplier" id="mainX">SCANNING...</div>
-                <div id="mainTime">Raundi inaanza: --:--</div>
-                <div class="timer-line"><div class="progress-line" id="bar"></div></div>
+        <div class="glass-card" id="welcome-screen">
+            <h1 id="welcome-msg">WELCOME</h1>
+            <p>Syncing Algorithms for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
+            <div class="loader"></div>
+            <p style="font-size: 0.8rem; opacity: 0.5;">Establishing Secure Connection...</p>
+        </div>
+
+        <div class="glass-card" id="dashboard" style="max-width: 600px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <span id="user-display" style="color: var(--neon-green);"></span>
+                <span id="comp-display" style="color: var(--cyber-blue);"></span>
             </div>
 
-            <div class="rounds-container">
-                <div class="round-box">
-                    <h3>LAST ROUNDS (HISTORY)</h3>
-                    <div id="historyList">
-                        <div class="list-item"><span>Round #01</span><span class="val-history">1.45x</span></div>
-                    </div>
+            <div class="main-display">
+                <div style="font-size: 0.7rem; letter-spacing: 3px;">LIVE SIGNAL DETECTED</div>
+                <div class="multiplier" id="current-x">SCANNING</div>
+                <div id="next-time" style="font-weight: bold;">ROUND STARTS IN: --:--</div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>PAST ROUNDS</h4>
+                    <div id="hist-list"></div>
                 </div>
-                <div class="round-box">
-                    <h3>UPCOMING ROUNDS</h3>
-                    <div id="upcomingList">
-                        </div>
+                <div class="info-item">
+                    <h4>UPCOMING SIGNALS</h4>
+                    <div id="up-list"></div>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color: #444;">
-                SECURE SERVER: +255784766591 | ENCRYPTED ALGORITHM
-            </div>
+            <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4;">
+                ENCRYPTED SERVER: +255784766591 | AI PREDATOR v5.0
+            </p>
         </div>
     </div>
 
@@ -184,85 +150,74 @@
         const wallpapers = [
             'https://wallpaperaccess.com/full/1567665.jpg',
             'https://wallpaperaccess.com/full/2454504.jpg',
-            'https://wallpaperaccess.com/full/1892751.jpg'
+            'https://wallpaperaccess.com/full/1150654.jpg'
         ];
-        let bgI = 0;
-        function slide() {
-            document.getElementById('bg-slider').style.backgroundImage = `url('${wallpapers[bgI]}')`;
-            bgI = (bgI + 1) % wallpapers.length;
+        let wallIdx = 0;
+        function changeWall() {
+            document.getElementById('bg').style.backgroundImage = `url('${wallpapers[wallIdx]}')`;
+            wallIdx = (wallIdx + 1) % wallpapers.length;
         }
-        setInterval(slide, 30000); slide();
+        setInterval(changeWall, 30000); changeWall();
 
-        let historyData = [];
-        let upcomingData = [];
+        let upcoming = [];
+        let history = [];
 
-        function activate() {
-            const u = document.getElementById('user').value;
-            const c = document.getElementById('camp').value;
-            if(!u) return alert("Weka Username!");
+        function startApp() {
+            const name = document.getElementById('username').value;
+            const comp = document.getElementById('company').value;
+            if(!name || !comp) return alert("Please enter your name and select a platform!");
 
-            document.getElementById('authBox').style.display = 'none';
-            document.getElementById('dash').style.display = 'block';
-            document.getElementById('displayUser').innerText = `USER: ${u}`;
-            document.getElementById('displayCamp').innerText = `CAMP: ${c}`;
-
-            // Initialize upcoming rounds
-            for(let i=0; i<3; i++) { upcomingData.push(generateOdds()); }
-            updateLists();
-            runCycle();
-        }
-
-        function generateOdds() {
-            let r = Math.random();
-            if(r > 0.95) return (Math.random() * 80 + 20).toFixed(2) + "x";
-            if(r > 0.8) return (Math.random() * 15 + 5).toFixed(2) + "x";
-            return (Math.random() * 3 + 1.1).toFixed(2) + "x";
-        }
-
-        function updateLists() {
-            // Update Upcoming
-            const upEl = document.getElementById('upcomingList');
-            upEl.innerHTML = upcomingData.map((odd, i) => `
-                <div class="list-item"><span>Next #${i+1}</span><span class="val-upcoming">${odd}</span></div>
-            `).join('');
-
-            // Update History
-            const histEl = document.getElementById('historyList');
-            histEl.innerHTML = historyData.slice(-5).reverse().map((odd, i) => `
-                <div class="list-item"><span>Past</span><span class="val-history">${odd}</span></div>
-            `).join('');
-        }
-
-        function runCycle() {
-            const mainX = document.getElementById('mainX');
-            const mainTime = document.getElementById('mainTime');
-            const bar = document.getElementById('bar');
-
-            // 1. Kuchukua odd ya kwanza kutoka upcoming
-            let currentOdd = upcomingData.shift();
-            upcomingData.push(generateOdds()); // Ongeza mpya mwishoni
-
-            mainX.innerText = "WAIT...";
-            bar.style.transition = 'none';
-            bar.style.width = '0%';
+            // Show Welcome Screen
+            document.getElementById('login-card').style.display = 'none';
+            document.getElementById('welcome-screen').style.display = 'block';
+            document.getElementById('welcome-msg').innerText = `WELCOME, ${name.toUpperCase()}`;
+            document.getElementById('target-comp').innerText = comp;
 
             setTimeout(() => {
-                mainX.innerText = currentOdd;
-                const now = new Date();
-                mainTime.innerText = `Raundi: ${now.getMinutes()}:${(now.getSeconds()+5).toString().padStart(2,'0')}`;
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('user-display').innerText = `USER: ${name}`;
+                document.getElementById('comp-display').innerText = `PLATFORM: ${comp}`;
                 
-                // Hamisha kwenda history baada ya mzunguko
-                historyData.push(currentOdd);
-                updateLists();
+                // Initialize prediction data
+                for(let i=0; i<3; i++) upcoming.push(genX());
+                updateUI();
+                runEngine();
+            }, 3000);
+        }
 
-                // Anza progress bar (20 seconds cycle)
-                setTimeout(() => {
-                    bar.style.transition = 'width 20s linear';
-                    bar.style.width = '100%';
-                }, 100);
+        function genX() {
+            let r = Math.random();
+            if(r > 0.96) return (Math.random() * 90 + 10).toFixed(2) + "x"; // Jackpot
+            if(r > 0.85) return (Math.random() * 9 + 1.5).toFixed(2) + "x"; // Mid
+            return (Math.random() * 1.5 + 1.1).toFixed(2) + "x"; // Low
+        }
 
-                // Rudia baada ya sekunde 20
-                setTimeout(runCycle, 20000);
+        function updateUI() {
+            document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="history-val" style="color:var(--cyber-blue)">● ${x}</span>`).join('');
+            document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="history-val">○ ${x}</span>`).join('');
+        }
+
+        function runEngine() {
+            const mainX = document.getElementById('current-x');
+            const timeX = document.getElementById('next-time');
+            
+            let cur = upcoming.shift();
+            upcoming.push(genX());
+            
+            mainX.innerText = "WAITING";
+            mainX.style.color = "white";
+
+            setTimeout(() => {
+                mainX.innerText = cur;
+                mainX.style.color = "var(--predator-red)";
+                const d = new Date();
+                timeX.innerText = `NEXT ROUND: ${d.getHours()}:${d.getMinutes()}:${(d.getSeconds()+5).toString().padStart(2,'0')}`;
+                
+                history.push(cur);
+                updateUI();
+                
+                setTimeout(runEngine, 15000); // New signal every 15 seconds
             }, 3000);
         }
     </script>
