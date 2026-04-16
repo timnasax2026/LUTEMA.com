@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA Jr - AVIATOR PREDATOR PRO</title>
+    <title>LUTEMA Jr - AVIATOR PREDATOR ULTIMATE</title>
     <style>
         :root {
             --neon-green: #00ff41;
             --predator-red: #ff0000;
             --dark-black: #050505;
-            --glass-bg: rgba(0, 0, 0, 0.85);
+            --glass: rgba(0, 0, 0, 0.9);
         }
 
         body, html {
@@ -17,252 +17,253 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Consolas', 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             background: var(--dark-black);
             color: var(--neon-green);
-            overflow: hidden;
             background-size: cover;
             background-position: center;
             transition: background 1.5s ease-in-out;
+            overflow-x: hidden;
         }
 
-        /* Background Overlay */
-        .overlay-dark {
+        .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             z-index: 1;
         }
 
-        .main-wrapper {
+        .wrapper {
             position: relative;
             z-index: 10;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 20px;
+            min-height: 100vh;
         }
 
-        /* Auth/Login Box */
-        .auth-box {
-            background: var(--glass-bg);
-            padding: 40px;
+        /* Login Box */
+        .auth-card {
+            background: var(--glass);
+            padding: 30px;
             border: 2px solid var(--neon-green);
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
             border-radius: 15px;
-            width: 90%;
+            width: 100%;
             max-width: 400px;
             text-align: center;
+            align-self: center;
         }
 
-        /* Predictor Dashboard */
+        /* Main Predictor Dashboard */
         .dashboard {
-            display: none; /* Inafichwa mpaka login ikamilike */
-            background: var(--glass-bg);
-            padding: 30px;
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            background: var(--glass);
             border: 1px solid var(--neon-green);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
-            border-radius: 20px;
-            width: 95%;
-            max-width: 500px;
-            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
         }
 
-        h1 { font-size: 1.5rem; margin-bottom: 5px; color: #fff; letter-spacing: 3px; }
-        .red-tag { color: var(--predator-red); font-weight: bold; margin-bottom: 20px; }
+        h1 { font-size: 1.4rem; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
+        .red-blink { color: var(--predator-red); animation: blink 1s infinite; font-weight: bold; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
         input, select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #000;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            border-radius: 5px;
-            box-sizing: border-box;
-            outline: none;
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            background: #000; border: 1px solid var(--neon-green);
+            color: var(--neon-green); border-radius: 5px; box-sizing: border-box;
         }
 
-        .btn-start {
-            width: 100%;
-            padding: 15px;
-            background: var(--neon-green);
-            color: black;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 5px;
+        .btn {
+            width: 100%; padding: 15px; background: var(--neon-green);
+            color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 5px;
         }
 
-        /* Signal Elements */
-        .signal-display {
-            padding: 20px;
-            border: 2px dashed var(--neon-green);
+        /* Signal Layout */
+        .main-signal {
+            text-align: center;
+            border: 2px solid var(--neon-green);
+            padding: 30px;
             margin: 20px 0;
             background: rgba(0, 255, 65, 0.05);
+            border-radius: 10px;
         }
 
-        .multiplier {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--predator-red);
-            text-shadow: 0 0 15px var(--predator-red);
-            margin: 10px 0;
+        .multiplier { font-size: 4rem; font-weight: bold; color: var(--predator-red); margin: 10px 0; }
+
+        /* History & Upcoming */
+        .rounds-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .status-text { color: #fff; font-size: 0.9rem; margin-bottom: 10px; }
-        
-        .timer-bar {
-            width: 100%;
-            height: 4px;
-            background: #222;
-            margin-top: 15px;
-        }
-        .progress {
-            height: 100%;
-            background: var(--neon-green);
-            width: 100%;
-            transition: width 20s linear;
+        .round-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
         }
 
-        .user-info-bar {
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 15px;
-            text-align: left;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
+        .round-box h3 { font-size: 0.9rem; margin-top: 0; color: var(--neon-green); border-bottom: 1px solid #333; }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #222;
         }
+
+        .val-history { color: #ff00ff; } /* Rangi ya History */
+        .val-upcoming { color: #00ffff; } /* Rangi ya Upcoming */
+
+        .timer-line {
+            width: 100%; height: 3px; background: #222; margin-top: 10px;
+        }
+        .progress-line { height: 100%; background: var(--neon-green); width: 0%; }
     </style>
 </head>
 <body id="bg-slider">
-    <div class="overlay-dark"></div>
+    <div class="overlay"></div>
 
-    <div class="main-wrapper">
-        <div class="auth-box" id="authBox">
+    <div class="wrapper">
+        <div class="auth-card" id="authBox">
             <h1>LUTEMA JR</h1>
-            <div class="red-tag">PREDATOR LOGIN</div>
-            <input type="text" id="username" placeholder="Username (Mf: Lutema_01)">
+            <div class="red-blink">PREDATOR ULTIMATE v4.0</div>
+            <p style="font-size: 0.8rem;">Enter credentials to sync signals</p>
+            <input type="text" id="user" placeholder="Username">
             <div style="display: flex; gap: 5px;">
-                <input type="text" id="countryCode" placeholder="+255" style="width: 30%;">
-                <input type="text" id="phoneNumber" placeholder="784XXXXXX" style="width: 70%;">
+                <input type="text" id="code" value="+255" style="width: 30%;">
+                <input type="text" id="phone" placeholder="784XXXXXX" style="width: 70%;">
             </div>
-            <select id="companySelect">
-                <option value="">-- Chagua Kampuni --</option>
+            <select id="camp">
                 <option value="Betika">Betika</option>
                 <option value="Gal Sport">Gal Sport</option>
                 <option value="Premier Bet">Premier Bet</option>
                 <option value="Wasafi Bet">Wasafi Bet</option>
-                <option value="888Bet">888Bet</option>
-                <option value="SportyBet">SportyBet</option>
             </select>
-            <button class="btn-start" onclick="login()">ACTIVATE SYSTEM</button>
+            <button class="btn" onclick="activate()">ACTIVATE SYSTEM</button>
         </div>
 
-        <div class="dashboard" id="dashboard">
-            <div class="user-info-bar" id="userInfo">
-                </div>
-            <h1>PREDATOR ENGINE</h1>
-            <div class="status-text" id="engineStatus">Scanning Market Algorithms...</div>
+        <div class="dashboard" id="dash">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #888;">
+                <span id="displayUser"></span>
+                <span id="displayCamp"></span>
+            </div>
+            
+            <div class="main-signal">
+                <div style="font-size: 0.9rem; letter-spacing: 2px;">ACTIVE PREDICTION</div>
+                <div class="multiplier" id="mainX">SCANNING...</div>
+                <div id="mainTime">Raundi inaanza: --:--</div>
+                <div class="timer-line"><div class="progress-line" id="bar"></div></div>
+            </div>
 
-            <div class="signal-display">
-                <div style="font-size: 0.8rem;">NEXT ROUND ODDS</div>
-                <div class="multiplier" id="multiplier">--</div>
-                <div id="targetTime" style="color: #fff;">Wait for Signal...</div>
-                
-                <div class="timer-bar">
-                    <div class="progress" id="progressBar"></div>
+            <div class="rounds-container">
+                <div class="round-box">
+                    <h3>LAST ROUNDS (HISTORY)</h3>
+                    <div id="historyList">
+                        <div class="list-item"><span>Round #01</span><span class="val-history">1.45x</span></div>
+                    </div>
+                </div>
+                <div class="round-box">
+                    <h3>UPCOMING ROUNDS</h3>
+                    <div id="upcomingList">
+                        </div>
                 </div>
             </div>
 
-            <div style="font-size: 0.7rem; color: #555;">
-                System: <strong>AUTOMATIC MODE</strong> | Namba: +255784766591
+            <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color: #444;">
+                SECURE SERVER: +255784766591 | ENCRYPTED ALGORITHM
             </div>
         </div>
     </div>
 
     <script>
-        // Wallpapers
         const wallpapers = [
             'https://wallpaperaccess.com/full/1567665.jpg',
             'https://wallpaperaccess.com/full/2454504.jpg',
             'https://wallpaperaccess.com/full/1892751.jpg'
         ];
-        let bgIdx = 0;
-        function slideBg() {
-            document.getElementById('bg-slider').style.backgroundImage = `url('${wallpapers[bgIdx]}')`;
-            bgIdx = (bgIdx + 1) % wallpapers.length;
+        let bgI = 0;
+        function slide() {
+            document.getElementById('bg-slider').style.backgroundImage = `url('${wallpapers[bgI]}')`;
+            bgI = (bgI + 1) % wallpapers.length;
         }
-        setInterval(slideBg, 30000);
-        slideBg();
+        setInterval(slide, 30000); slide();
 
-        // Login Logic
-        function login() {
-            const user = document.getElementById('username').value;
-            const code = document.getElementById('countryCode').value;
-            const phone = document.getElementById('phoneNumber').value;
-            const company = document.getElementById('companySelect').value;
+        let historyData = [];
+        let upcomingData = [];
 
-            if(!user || !phone || !company) {
-                alert("Tafadhali jaza taarifa zote!");
-                return;
-            }
+        function activate() {
+            const u = document.getElementById('user').value;
+            const c = document.getElementById('camp').value;
+            if(!u) return alert("Weka Username!");
 
             document.getElementById('authBox').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('userInfo').innerText = `USER: ${user} | CAMP: ${company} | STATUS: ENCRYPTED`;
-            
-            startAutoSignals();
+            document.getElementById('dash').style.display = 'block';
+            document.getElementById('displayUser').innerText = `USER: ${u}`;
+            document.getElementById('displayCamp').innerText = `CAMP: ${c}`;
+
+            // Initialize upcoming rounds
+            for(let i=0; i<3; i++) { upcomingData.push(generateOdds()); }
+            updateLists();
+            runCycle();
         }
 
-        // Automatic Signal System
-        function startAutoSignals() {
-            generateSignal(); // First one
-            
-            // Loop every 20 seconds
-            setInterval(() => {
-                generateSignal();
-            }, 20000);
+        function generateOdds() {
+            let r = Math.random();
+            if(r > 0.95) return (Math.random() * 80 + 20).toFixed(2) + "x";
+            if(r > 0.8) return (Math.random() * 15 + 5).toFixed(2) + "x";
+            return (Math.random() * 3 + 1.1).toFixed(2) + "x";
         }
 
-        function generateSignal() {
-            const multiplierEl = document.getElementById('multiplier');
-            const statusEl = document.getElementById('engineStatus');
-            const timeEl = document.getElementById('targetTime');
-            const progress = document.getElementById('progressBar');
+        function updateLists() {
+            // Update Upcoming
+            const upEl = document.getElementById('upcomingList');
+            upEl.innerHTML = upcomingData.map((odd, i) => `
+                <div class="list-item"><span>Next #${i+1}</span><span class="val-upcoming">${odd}</span></div>
+            `).join('');
 
-            // Reset progress bar animation
-            progress.style.transition = 'none';
-            progress.style.width = '0%';
-            
-            statusEl.innerText = "CALCULATING NEXT ROUND...";
-            multiplierEl.innerText = "....";
-            
+            // Update History
+            const histEl = document.getElementById('historyList');
+            histEl.innerHTML = historyData.slice(-5).reverse().map((odd, i) => `
+                <div class="list-item"><span>Past</span><span class="val-history">${odd}</span></div>
+            `).join('');
+        }
+
+        function runCycle() {
+            const mainX = document.getElementById('mainX');
+            const mainTime = document.getElementById('mainTime');
+            const bar = document.getElementById('bar');
+
+            // 1. Kuchukua odd ya kwanza kutoka upcoming
+            let currentOdd = upcomingData.shift();
+            upcomingData.push(generateOdds()); // Ongeza mpya mwishoni
+
+            mainX.innerText = "WAIT...";
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+
             setTimeout(() => {
-                // Logic ya kupata odds (Uhalisia: odds za chini ni nyingi, za juu ni chache)
-                let chance = Math.random();
-                let odds;
-                if(chance > 0.9) odds = (Math.random() * (50.0 - 10.0) + 10.0).toFixed(2); // Big win
-                else if(chance > 0.7) odds = (Math.random() * (10.0 - 3.0) + 3.0).toFixed(2); // Mid win
-                else odds = (Math.random() * (3.0 - 1.2) + 1.2).toFixed(2); // Low win
-
-                multiplierEl.innerText = odds + "X";
-                statusEl.innerText = "SIGNAL DETECTED!";
-                
-                // Get time for the next round (Current time + random seconds)
+                mainX.innerText = currentOdd;
                 const now = new Date();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const seconds = (now.getSeconds() + 5).toString().padStart(2, '0');
-                timeEl.innerText = `Raundi Inaanza: ${minutes}:${seconds}`;
+                mainTime.innerText = `Raundi: ${now.getMinutes()}:${(now.getSeconds()+5).toString().padStart(2,'0')}`;
+                
+                // Hamisha kwenda history baada ya mzunguko
+                historyData.push(currentOdd);
+                updateLists();
 
-                // Restart progress bar for 20 seconds
+                // Anza progress bar (20 seconds cycle)
                 setTimeout(() => {
-                    progress.style.transition = 'width 20s linear';
-                    progress.style.width = '100%';
+                    bar.style.transition = 'width 20s linear';
+                    bar.style.width = '100%';
                 }, 100);
 
-            }, 2000);
+                // Rudia baada ya sekunde 20
+                setTimeout(runCycle, 20000);
+            }, 3000);
         }
     </script>
 </body>
