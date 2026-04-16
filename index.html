@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA JR | GLOBAL PREDATOR AI</title>
+    <title>LUTEMA JR | AVIATOR PREDATOR GLOBAL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
 
@@ -40,51 +39,66 @@
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
-            padding: 35px;
+            padding: 30px;
             width: 100%; max-width: 450px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
-        .tagline { font-size: 0.7rem; letter-spacing: 3px; color: var(--predator-red); margin-bottom: 25px; font-weight: bold; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; letter-spacing: 3px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
+        .tagline { font-size: 0.7rem; color: var(--predator-red); margin-bottom: 20px; font-weight: bold; }
 
         input, select {
-            width: 100%; padding: 14px; margin-bottom: 15px;
+            width: 100%; padding: 12px; margin-bottom: 12px;
             background: rgba(0,0,0,0.7); border: 1px solid var(--cyber-blue);
-            color: white; border-radius: 12px; font-family: inherit; font-size: 1rem;
-            box-sizing: border-box; outline: none; text-align: center;
+            color: white; border-radius: 10px; font-family: inherit;
+            box-sizing: border-box; text-align: center;
         }
 
-        /* Styling the scrollbar for the long select list */
-        select option { background: #020b10; color: white; }
+        /* Search List Styling */
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        #companyList {
+            max-height: 150px; overflow-y: auto;
+            background: rgba(0,0,0,0.9); border: 1px solid var(--neon-green);
+            border-radius: 8px; display: none; text-align: left;
+            position: absolute; width: 100%; z-index: 100;
+        }
+
+        .company-option { padding: 10px; cursor: pointer; border-bottom: 1px solid #222; font-size: 0.9rem; }
+        .company-option:hover { background: var(--cyber-blue); color: black; }
 
         .btn-glow {
-            width: 100%; padding: 18px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
-            border: none; border-radius: 12px; color: black; font-weight: 700;
-            text-transform: uppercase; cursor: pointer; letter-spacing: 2px; transition: 0.3s;
+            width: 100%; padding: 16px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
+            border: none; border-radius: 10px; color: black; font-weight: 700;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s;
         }
 
-        .btn-glow:hover { box-shadow: 0 0 25px var(--neon-green); transform: translateY(-2px); }
+        .whatsapp-btn {
+            background: #25d366; color: white; padding: 10px;
+            border-radius: 50px; text-decoration: none; display: inline-flex;
+            align-items: center; justify-content: center; margin-top: 15px;
+            font-size: 0.8rem; font-weight: bold; width: 100%;
+        }
 
         #verify-section, #dashboard, #welcome-screen { display: none; }
 
         .main-display {
             border: 2px solid var(--neon-green); border-radius: 20px;
-            padding: 25px; margin: 20px 0; background: rgba(0, 255, 157, 0.05);
+            padding: 20px; margin: 15px 0; background: rgba(0, 255, 157, 0.05);
         }
 
-        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
+        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: var(--predator-red); margin: 5px 0; }
 
-        .time-box { font-size: 1.1rem; color: #fff; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 8px; border: 1px solid var(--cyber-blue); }
+        .time-box { font-size: 1rem; color: #fff; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; border: 1px solid var(--cyber-blue); }
 
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .info-item { background: rgba(0,0,0,0.5); padding: 10px; border-radius: 12px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); text-align: left; }
-        .info-item h4 { margin: 0 0 5px 0; color: var(--cyber-blue); font-size: 0.65rem; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .info-item { background: rgba(0,0,0,0.6); padding: 10px; border-radius: 10px; font-size: 0.75rem; text-align: left; }
 
-        .hist-val { display: block; color: var(--neon-green); font-size: 0.9rem; }
-
-        .loader { width: 35px; height: 35px; border: 4px solid #111; border-top: 4px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+        .loader { width: 30px; height: 30px; border: 3px solid #111; border-top: 3px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 15px auto; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -94,173 +108,136 @@
     <div class="container">
         <div class="glass-card" id="login-card">
             <h1>LUTEMA JR</h1>
-            <div class="tagline">PREDATOR AI SYSTEM</div>
-            <input type="text" id="username" placeholder="Full Name">
-            <input type="text" id="phone" placeholder="Phone Number (e.g. 0784...)">
+            <div class="tagline">AVIATOR PREDATOR PRO</div>
             
-            <select id="company">
-                <option value="">-- Choose Platform (200+ Total) --</option>
-                <optgroup label="Tanzania / East Africa">
-                    <option value="Betika">Betika</option>
-                    <option value="Gal Sport">Gal Sport</option>
-                    <option value="Premier Bet">Premier Bet</option>
-                    <option value="Wasafi Bet">Wasafi Bet</option>
-                    <option value="SportyBet">SportyBet</option>
-                    <option value="888Bet">888Bet</option>
-                    <option value="Parimatch">Parimatch</option>
-                    <option value="M-Bet">M-Bet</option>
-                    <option value="SokaBet">SokaBet</option>
-                    <option value="PlayMaster">PlayMaster</option>
-                    <option value="Betway">Betway</option>
-                    <option value="22Bet">22Bet</option>
-                    <option value="1xBet">1xBet</option>
-                </optgroup>
-                <optgroup label="Global Platforms">
-                    <option value="Bet365">Bet365</option>
-                    <option value="William Hill">William Hill</option>
-                    <option value="Bwin">Bwin</option>
-                    <option value="Betfair">Betfair</option>
-                    <option value="Unibet">Unibet</option>
-                    <option value="888Sport">888Sport</option>
-                    <option value="Paddy Power">Paddy Power</option>
-                    <option value="SkyBet">SkyBet</option>
-                    <option value="Ladbrokes">Ladbrokes</option>
-                    <option value="Coral">Coral</option>
-                    <option value="DraftKings">DraftKings</option>
-                    <option value="FanDuel">FanDuel</option>
-                    <option value="BetMGM">BetMGM</option>
-                    </optgroup>
-            </select>
+            <input type="text" id="username" placeholder="Enter Full Name">
             
-            <button class="btn-glow" onclick="showVerify()">REQUEST ACCESS CODE</button>
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="countryCode" placeholder="+255" style="width: 30%;">
+                <input type="text" id="phone" placeholder="Phone Number" style="width: 70%;">
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchComp" placeholder="🔍 Search Company (Betika, 1xBet...)" onkeyup="filterCompanies()">
+                <div id="companyList"></div>
+                <input type="hidden" id="selectedCompany">
+            </div>
+
+            <button class="btn-glow" onclick="showVerify()">REQUEST ACCESS PIN</button>
+            
+            <a href="https://wa.me/255784766591?text=Hello%20Lutema%20Jr,%20I%20need%20help%20with%20the%20Aviator%20Predator%20App" class="whatsapp-btn" target="_blank">
+                CHAT WITH OWNER (WHATSAPP)
+            </a>
         </div>
 
         <div class="glass-card" id="verify-section">
             <h2 style="color: var(--neon-green);">VERIFICATION</h2>
-            <p style="font-size: 0.9rem; margin-bottom: 20px;">
-                Checking encrypted logs for: <br>
-                <span id="sent-phone" style="color: var(--cyber-blue);"></span>
-            </p>
-            <div id="sms-sim" style="font-size: 0.75rem; color: #888; margin-bottom: 10px; font-style: italic;">
-                [System: Sending code via Satellite...]
-            </div>
-            <input type="text" id="pin" placeholder="ENTER ACCESS CODE" maxlength="6">
-            <button class="btn-glow" onclick="validatePin()">VERIFY & LOGIN</button>
-            <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.6;">Hint: Use your secret access code or 123456</p>
+            <p style="font-size: 0.8rem;">Access Code required for security.</p>
+            <input type="password" id="pin" placeholder="ENTER 6-DIGIT PIN">
+            <button class="btn-glow" onclick="validatePin()">LOGIN TO ENGINE</button>
         </div>
 
         <div class="glass-card" id="welcome-screen">
             <h1 id="welcome-msg">WELCOME</h1>
-            <p>Syncing signals for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
+            <p id="sync-text">Syncing algorithms...</p>
             <div class="loader"></div>
-            <p style="font-size: 0.7rem; opacity: 0.6;">ENCRYPTION: AES-256 BIT</p>
         </div>
 
         <div class="glass-card" id="dashboard">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 10px; opacity: 0.8;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; opacity: 0.8;">
                 <span id="user-display"></span>
                 <span id="comp-display" style="color: var(--cyber-blue);"></span>
             </div>
 
             <div class="main-display">
-                <div style="font-size: 0.7rem; letter-spacing: 2px;">LIVE PREDATOR ODDS</div>
-                <div class="multiplier" id="current-x">SCANNING</div>
-                <div class="time-box" id="next-time">SYNCING...</div>
+                <div style="font-size: 0.6rem; letter-spacing: 2px;">LIVE PREDATOR ODDS</div>
+                <div class="multiplier" id="current-x">WAIT</div>
+                <div class="time-box" id="next-time">--:--:--</div>
             </div>
 
             <div class="info-grid">
-                <div class="info-item">
-                    <h4>HISTORY</h4>
-                    <div id="hist-list"></div>
-                </div>
-                <div class="info-item">
-                    <h4>UPCOMING</h4>
-                    <div id="up-list"></div>
-                </div>
+                <div class="info-item"><h4>HISTORY</h4><div id="hist-list"></div></div>
+                <div class="info-item"><h4>UPCOMING</h4><div id="up-list"></div></div>
             </div>
 
-            <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4;">
-                PROTECTED BY LUTEMA AI | GLOBAL VERSION
-            </p>
+            <a href="https://wa.me/255784766591" style="font-size: 0.6rem; color: #888; text-decoration: none; display: block; margin-top: 15px;">
+                Support: +255 784 766 591
+            </a>
         </div>
     </div>
 
     <script>
-        // Injecting more companies to reach 200+
-        const select = document.getElementById('company');
-        const globalGroup = select.querySelector('optgroup[label="Global Platforms"]');
-        for(let i=1; i<=175; i++) {
-            let opt = document.createElement('option');
-            opt.value = "Platform_" + i;
-            opt.innerHTML = "BetGlobal " + (100 + i);
-            globalGroup.appendChild(opt);
-        }
-
-        const wallpapers = [
-            'https://wallpaperaccess.com/full/1567665.jpg',
-            'https://wallpaperaccess.com/full/2454504.jpg',
-            'https://wallpaperaccess.com/full/1892751.jpg'
+        // List of 200+ Companies
+        const companies = [
+            "Betika", "Gal Sport", "Premier Bet", "Wasafi Bet", "SportyBet", "888Bet", "Parimatch", "M-Bet", "SokaBet", "PlayMaster", "Betway", "22Bet", "1xBet", "Bet365", "Bwin", "Betfair", "Unibet", "William Hill", "DraftKings", "FanDuel", "BetMGM", "Mozzart Bet", "BetKing", "Bet9ja", "NairaBet", "Hollywoodbets", "Supabets", "Odibets", "BetLion", "Melbet", "Bet Winner"
         ];
-        let wIdx = 0;
-        function slide() {
-            document.getElementById('bg').style.backgroundImage = `url('${wallpapers[wIdx]}')`;
-            wIdx = (wIdx+1)%wallpapers.length;
+        // Add more dummy platforms to reach 200
+        for(let i=1; i<=170; i++) { companies.push("Global Platform " + (i+100)); }
+
+        function filterCompanies() {
+            const input = document.getElementById('searchComp').value.toLowerCase();
+            const list = document.getElementById('companyList');
+            list.innerHTML = "";
+            if(!input) { list.style.display = "none"; return; }
+            
+            const filtered = companies.filter(c => c.toLowerCase().includes(input));
+            if(filtered.length > 0) {
+                list.style.display = "block";
+                filtered.forEach(c => {
+                    let div = document.createElement('div');
+                    div.className = "company-option";
+                    div.innerText = c;
+                    div.onclick = () => {
+                        document.getElementById('searchComp').value = c;
+                        document.getElementById('selectedCompany').value = c;
+                        list.style.display = "none";
+                    };
+                    list.appendChild(div);
+                });
+            } else { list.style.display = "none"; }
         }
-        setInterval(slide, 30000); slide();
 
         function showVerify() {
             const name = document.getElementById('username').value;
-            const phone = document.getElementById('phone').value;
-            const comp = document.getElementById('company').value;
-
-            if(!name || !phone || !comp) return alert("Please fill all fields!");
-
+            const comp = document.getElementById('selectedCompany').value || document.getElementById('searchComp').value;
+            if(!name || !comp) return alert("Please fill Name and select a Company!");
             document.getElementById('login-card').style.display = 'none';
-            document.getElementById('sent-phone').innerText = phone;
             document.getElementById('verify-section').style.display = 'block';
-            
-            // Simulation of "Sending Code"
-            setTimeout(() => {
-                document.getElementById('sms-sim').innerText = "[Code Generated: Check your private vault]";
-            }, 2000);
         }
 
         function validatePin() {
             const pin = document.getElementById('pin').value;
-            if(!pin) return alert("Please enter the access code!");
-
+            if(!pin) return alert("Enter Access Code!");
+            
             document.getElementById('verify-section').style.display = 'none';
             document.getElementById('welcome-screen').style.display = 'block';
             
             const name = document.getElementById('username').value;
-            const comp = document.getElementById('company').value;
-            document.getElementById('welcome-msg').innerText = `WELCOME, ${name.toUpperCase()}`;
-            document.getElementById('target-comp').innerText = comp;
+            const comp = document.getElementById('selectedCompany').value || document.getElementById('searchComp').value;
+            document.getElementById('welcome-msg').innerText = `HELLO, ${name.toUpperCase()}`;
+            document.getElementById('sync-text').innerText = `Syncing ${comp} Server...`;
 
             setTimeout(() => {
                 document.getElementById('welcome-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
                 document.getElementById('user-display').innerText = `👤 ${name}`;
                 document.getElementById('comp-display').innerText = `🎰 ${comp}`;
-                
-                runEngine();
+                startEngine();
             }, 3000);
         }
 
-        let upcoming = [];
         let history = [];
+        let upcoming = [];
 
         function genX() {
             let r = Math.random();
-            if(r > 0.99) return (Math.random() * 800 + 200).toFixed(2) + "x";
-            if(r > 0.95) return (Math.random() * 100 + 15).toFixed(2) + "x";
-            if(r > 0.8) return (Math.random() * 8 + 1.8).toFixed(2) + "x";
-            return (Math.random() * 0.8 + 1.01).toFixed(2) + "x";
+            if(r > 0.98) return (Math.random() * 900 + 100).toFixed(2) + "x";
+            if(r > 0.9) return (Math.random() * 50 + 5).toFixed(2) + "x";
+            return (Math.random() * 1.5 + 1.01).toFixed(2) + "x";
         }
 
-        function runEngine() {
-            if(upcoming.length < 3) { for(let i=0; i<3; i++) upcoming.push(genX()); }
-            
+        function startEngine() {
+            if(upcoming.length < 3) for(let i=0; i<3; i++) upcoming.push(genX());
             const displayX = document.getElementById('current-x');
             const displayTime = document.getElementById('next-time');
             
@@ -274,16 +251,15 @@
                 displayX.innerText = targetX;
                 displayX.style.color = "var(--predator-red)";
                 
+                // Get Local Time based on user's country/device
                 const now = new Date();
-                displayTime.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                displayTime.innerText = now.toLocaleTimeString(); 
                 
                 history.push(targetX);
+                document.getElementById('up-list').innerHTML = upcoming.map(x => `<div style="color:var(--cyber-blue)">▶ ${x}</div>`).join('');
+                document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<div>✓ ${x}</div>`).join('');
                 
-                // Update lists
-                document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="hist-val" style="color:var(--cyber-blue)">▶ ${x}</span>`).join('');
-                document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="hist-val">✓ ${x}</span>`).join('');
-                
-                setTimeout(runEngine, 15000); 
+                setTimeout(startEngine, 15000);
             }, 3000);
         }
     </script>
