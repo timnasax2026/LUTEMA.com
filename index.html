@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA Jr - Aviator Predator</title>
+    <title>LUTEMA Jr - Aviator Predator Predictor</title>
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-black: #0d0d0d;
-            --overlay: rgba(0, 0, 0, 0.85);
+            --dark-black: #050505;
+            --predator-red: #ff0000;
         }
 
         body, html {
@@ -19,170 +19,197 @@
             font-family: 'Courier New', Courier, monospace;
             background-color: var(--dark-black);
             color: var(--neon-green);
-            overflow-x: hidden;
-            transition: background 2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 1.5s ease-in-out;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
         }
 
-        .bg-overlay {
+        /* Overlay */
+        .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay);
-            z-index: -1;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1;
         }
 
-        header {
+        .main-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.9);
             padding: 30px;
+            border: 2px solid var(--neon-green);
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--neon-green);
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            border-bottom: 2px solid var(--neon-green);
-            background: rgba(0,0,0,0.9);
-            box-shadow: 0 0 20px var(--neon-green);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 5px;
             text-shadow: 0 0 10px var(--neon-green);
         }
 
-        .container {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid var(--neon-green);
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            background: rgba(0, 255, 65, 0.1);
-            box-shadow: 0 0 15px var(--neon-green);
-        }
-
-        .status-blink {
-            height: 10px;
-            width: 10px;
-            background-color: red;
-            border-radius: 50%;
-            display: inline-block;
-            animation: blink 1s infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .btn {
-            background: var(--neon-green);
-            color: black;
-            border: none;
-            padding: 15px 30px;
+        .subtitle {
+            color: var(--predator-red);
             font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
         }
 
-        .input-field {
+        input, select {
             width: 100%;
-            padding: 10px;
-            background: black;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #000;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
-            margin-bottom: 10px;
+            border-radius: 5px;
+            font-family: inherit;
             box-sizing: border-box;
         }
 
-        footer {
-            text-align: center;
+        .btn-predict {
+            width: 100%;
+            padding: 15px;
+            background: var(--neon-green);
+            color: black;
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-predict:hover {
+            box-shadow: 0 0 20px var(--neon-green);
+            transform: scale(1.02);
+        }
+
+        /* Prediction Result */
+        #prediction-box {
+            margin-top: 25px;
             padding: 20px;
-            font-size: 0.8rem;
-            border-top: 1px solid var(--neon-green);
-            margin-top: 50px;
+            border: 1px dashed var(--neon-green);
+            display: none;
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .loading-text {
+            color: white;
+            font-style: italic;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            color: var(--predator-red);
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .time-value {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            opacity: 0.6;
         }
     </style>
 </head>
-<body id="dynamic-bg">
-    <div class="bg-overlay"></div>
+<body id="bg-slider">
+    <div class="overlay"></div>
 
-    <header>
-        <h1>LUTEMA Jr PREDATOR</h1>
-        <p>[ System Status: <span class="status-blink" style="background-color: var(--neon-green);"></span>Active ]</p>
-    </header>
+    <div class="main-container">
+        <h1>LUTEMA Jr</h1>
+        <div class="subtitle">AVIATOR PREDATOR</div>
 
-    <div class="container">
-        <div class="grid">
-            <div class="card">
-                <h2>AVIATOR SIGNALS</h2>
-                <p>Current Algorithm: v2.4</p>
-                <div style="font-size: 2rem; margin: 20px 0;">1.98x - 5.40x</div>
-                <button class="btn" onclick="alert('Searching for next flight...')">Get Next Signal</button>
-            </div>
+        <div id="form-section">
+            <input type="text" id="phone" placeholder="Ingiza Namba ya Simu">
+            <input type="text" id="company" placeholder="Ingiza Kampuni (Mf: Betika)">
+            <button class="btn-predict" onclick="startPrediction()">Predict Next Round</button>
+        </div>
 
-            <div class="card">
-                <h2>PREDATOR CAMPAIGN</h2>
-                <p>Target: Multiplier X100</p>
-                <ul style="text-align: left; list-style: none; padding: 0;">
-                    <li>> Scanning market...</li>
-                    <li>> Predator mode: ON</li>
-                </ul>
-                <button class="btn" style="background: #ff0000; color: white;">Activate Predator</button>
-            </div>
-
-            <div class="card">
-                <h2>VIP ACCESS</h2>
-                <p>Send Fee to: <b>+255784766591</b></p>
-                <input type="number" class="input-field" placeholder="Amount Paid">
-                <input type="text" class="input-field" placeholder="Transaction ID">
-                <button class="btn" onclick="alert('Verifying payment...')">Verify Access</button>
+        <div id="prediction-box">
+            <div id="loading" class="loading-text">Connecting to Server...</div>
+            <div id="result-content" style="display: none;">
+                <div>NEXT ROUND PREDICTION:</div>
+                <div class="result-value" id="next-x">--</div>
+                <div class="time-value">Muda: <span id="next-time">--</span></div>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 15px;">Target detected! Withdraw on time.</p>
             </div>
         </div>
+
+        <footer>
+            &copy; 2026 LUTEMA Jr Predator Algorithm | +255784766591
+        </footer>
     </div>
 
-    <footer>
-        &copy; 2026 LUTEMA Jr - AVIATOR PREDATOR ALL CAMPAIGN
-    </footer>
-
     <script>
-        // Wallpapers: Aviator, Predator, and Tech Themes
+        // Wallpapers changing every 30 seconds
         const wallpapers = [
-            'https://wallpaperaccess.com/full/1567665.jpg', // Hacker/Tech
-            'https://wallpaperaccess.com/full/2454504.jpg', // Predator style
-            'https://wallpaperaccess.com/full/1150654.jpg', // Plane/Aviator style
-            'https://wallpaperaccess.com/full/1892751.jpg'  // Matrix style
+            'https://wallpaperaccess.com/full/1567665.jpg',
+            'https://wallpaperaccess.com/full/2454504.jpg',
+            'https://wallpaperaccess.com/full/1892751.jpg'
         ];
 
         let bgIndex = 0;
-        const body = document.getElementById('dynamic-bg');
+        const body = document.getElementById('bg-slider');
 
-        function rotateBg() {
+        function changeBg() {
             body.style.backgroundImage = `url('${wallpapers[bgIndex]}')`;
             bgIndex = (bgIndex + 1) % wallpapers.length;
         }
+        setInterval(changeBg, 30000);
+        changeBg();
 
-        // Change every 30 seconds
-        setInterval(rotateBg, 30000);
-        rotateBg(); // Start first wallpaper
+        // Prediction Logic
+        function startPrediction() {
+            const phone = document.getElementById('phone').value;
+            const company = document.getElementById('company').value;
+
+            if(!phone || !company) {
+                alert("Tafadhali jaza namba na kampuni!");
+                return;
+            }
+
+            // Show box and loading
+            document.getElementById('prediction-box').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result-content').style.display = 'none';
+
+            // Fake processing time
+            setTimeout(() => {
+                document.getElementById('loading').innerText = "Analyzing " + company + " Data...";
+                
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('result-content').style.display = 'block';
+                    
+                    // Generate random prediction
+                    const randomX = (Math.random() * (10.0 - 1.5) + 1.5).toFixed(2) + "X";
+                    
+                    // Get current time + some seconds for next round
+                    const now = new Date();
+                    now.setSeconds(now.getSeconds() + Math.floor(Math.random() * 60) + 10);
+                    
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const seconds = now.getSeconds().toString().padStart(2, '0');
+                    
+                    document.getElementById('next-x').innerText = randomX;
+                    document.getElementById('next-time').innerText = minutes + ":" + seconds;
+                    
+                }, 2000);
+            }, 1500);
+        }
     </script>
 </body>
 </html>
