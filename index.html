@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA JR | PREDATOR AI v5.0</title>
+    <title>LUTEMA JR | PREDATOR AI v6.0</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
 
@@ -20,12 +20,11 @@
             background: var(--dark-bg);
             color: white; overflow: hidden;
             background-size: cover; background-position: center;
-            transition: background 2s ease;
         }
 
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(2,11,16,1) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(2,11,16,1) 100%);
             z-index: 1;
         }
 
@@ -35,59 +34,53 @@
             height: 100vh; padding: 20px;
         }
 
-        /* Glassmorphism Card */
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
-            padding: 40px;
-            width: 100%; max-width: 450px;
+            padding: 35px;
+            width: 100%; max-width: 480px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         h1 { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
-        .tagline { font-size: 0.8rem; letter-spacing: 5px; color: var(--predator-red); margin-bottom: 30px; font-weight: bold; }
+        .tagline { font-size: 0.7rem; letter-spacing: 3px; color: var(--predator-red); margin-bottom: 25px; }
 
         input, select {
-            width: 100%; padding: 15px; margin-bottom: 20px;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--cyber-blue);
-            color: white; border-radius: 12px; font-family: inherit; font-size: 1rem;
-            box-sizing: border-box; transition: 0.3s;
+            width: 100%; padding: 14px; margin-bottom: 15px;
+            background: rgba(0,0,0,0.6); border: 1px solid var(--cyber-blue);
+            color: white; border-radius: 12px; font-family: inherit; box-sizing: border-box;
         }
-
-        input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); outline: none; }
 
         .btn-glow {
             width: 100%; padding: 18px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
             border: none; border-radius: 12px; color: black; font-weight: 700;
-            text-transform: uppercase; cursor: pointer; letter-spacing: 2px; transition: 0.4s;
+            text-transform: uppercase; cursor: pointer; letter-spacing: 2px;
         }
 
-        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 157, 0.4); }
-
-        /* Dashboard Styles */
+        /* Dashboard Items */
         #dashboard { display: none; }
         .main-display {
             border: 2px solid var(--neon-green); border-radius: 20px;
-            padding: 30px; margin: 25px 0; background: rgba(0, 255, 157, 0.02);
-            position: relative; overflow: hidden;
+            padding: 25px; margin: 20px 0; background: rgba(0, 255, 157, 0.05);
         }
 
-        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 4.5rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
+        .multiplier { font-family: 'Orbitron', sans-serif; font-size: 3.8rem; color: var(--predator-red); margin: 10px 0; text-shadow: 0 0 20px var(--predator-red); }
 
-        /* Grid for Info */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .info-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; font-size: 0.8rem; border-bottom: 2px solid var(--cyber-blue); }
-        .info-item h4 { margin: 0 0 10px 0; color: var(--cyber-blue); font-size: 0.7rem; text-transform: uppercase; }
+        .time-box { font-size: 1.2rem; color: #fff; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
 
-        .history-val { color: var(--neon-green); display: block; margin-bottom: 5px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .info-item { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.05); }
+        .info-item h4 { margin: 0 0 8px 0; color: var(--cyber-blue); font-size: 0.7rem; }
 
-        /* Welcome Screen Animation */
-        #welcome-screen { display: none; text-align: center; }
-        .loader { width: 50px; height: 50px; border: 5px solid #111; border-top: 5px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hist-val { display: block; margin-bottom: 4px; color: var(--neon-green); }
+
+        /* Loader */
+        #welcome-screen { display: none; }
+        .loader { width: 40px; height: 40px; border: 4px solid #111; border-top: 4px solid var(--neon-green); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body id="bg">
@@ -96,52 +89,52 @@
     <div class="container">
         <div class="glass-card" id="login-card">
             <h1>LUTEMA JR</h1>
-            <div class="tagline">PREDATOR AI</div>
-            <input type="text" id="username" placeholder="Username / Display Name">
-            <input type="text" id="phone" placeholder="Phone Number (+255...)">
+            <div class="tagline">ULTIMATE PREDATOR AI</div>
+            <input type="text" id="username" placeholder="Username / Jina">
+            <input type="text" id="phone" placeholder="Namba ya Simu (+255...)">
             <select id="company">
-                <option value="">Select Platform</option>
+                <option value="">-- Chagua Kampuni --</option>
                 <option value="Betika">BETIKA</option>
                 <option value="Gal Sport">GAL SPORT</option>
                 <option value="Premier Bet">PREMIER BET</option>
-                <option value="SportyBet">SPORTYBET</option>
                 <option value="Wasafi Bet">WASAFI BET</option>
+                <option value="888Bet">888BET</option>
             </select>
-            <button class="btn-glow" onclick="startApp()">ACCESS SYSTEM</button>
+            <button class="btn-glow" onclick="startApp()">UNGANISHA MFUMO</button>
         </div>
 
         <div class="glass-card" id="welcome-screen">
             <h1 id="welcome-msg">WELCOME</h1>
-            <p>Syncing Algorithms for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
+            <p>Inatafuta Signal za <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
             <div class="loader"></div>
-            <p style="font-size: 0.8rem; opacity: 0.5;">Establishing Secure Connection...</p>
+            <p style="font-size: 0.7rem; opacity: 0.6;">SERVER STATUS: ENCRYPTED</p>
         </div>
 
-        <div class="glass-card" id="dashboard" style="max-width: 600px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
-                <span id="user-display" style="color: var(--neon-green);"></span>
+        <div class="glass-card" id="dashboard">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 15px; opacity: 0.7;">
+                <span id="user-display"></span>
                 <span id="comp-display" style="color: var(--cyber-blue);"></span>
             </div>
 
             <div class="main-display">
-                <div style="font-size: 0.7rem; letter-spacing: 3px;">LIVE SIGNAL DETECTED</div>
+                <div style="font-size: 0.7rem; letter-spacing: 2px;">LIVE PREDICTION</div>
                 <div class="multiplier" id="current-x">SCANNING</div>
-                <div id="next-time" style="font-weight: bold;">ROUND STARTS IN: --:--</div>
+                <div class="time-box" id="next-time">SYNCING...</div>
             </div>
 
             <div class="info-grid">
                 <div class="info-item">
-                    <h4>PAST ROUNDS</h4>
+                    <h4>PAST RESULTS</h4>
                     <div id="hist-list"></div>
                 </div>
                 <div class="info-item">
-                    <h4>UPCOMING SIGNALS</h4>
+                    <h4>UPCOMING</h4>
                     <div id="up-list"></div>
                 </div>
             </div>
 
             <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4;">
-                ENCRYPTED SERVER: +255784766591 | AI PREDATOR v5.0
+                PREDATOR v6.0 | SECURE LINE: +255784766591
             </p>
         </div>
     </div>
@@ -150,14 +143,14 @@
         const wallpapers = [
             'https://wallpaperaccess.com/full/1567665.jpg',
             'https://wallpaperaccess.com/full/2454504.jpg',
-            'https://wallpaperaccess.com/full/1150654.jpg'
+            'https://wallpaperaccess.com/full/1892751.jpg'
         ];
-        let wallIdx = 0;
-        function changeWall() {
-            document.getElementById('bg').style.backgroundImage = `url('${wallpapers[wallIdx]}')`;
-            wallIdx = (wallIdx + 1) % wallpapers.length;
+        let wIdx = 0;
+        function slide() {
+            document.getElementById('bg').style.backgroundImage = `url('${wallpapers[wIdx]}')`;
+            wIdx = (wIdx+1)%wallpapers.length;
         }
-        setInterval(changeWall, 30000); changeWall();
+        setInterval(slide, 30000); slide();
 
         let upcoming = [];
         let history = [];
@@ -165,59 +158,65 @@
         function startApp() {
             const name = document.getElementById('username').value;
             const comp = document.getElementById('company').value;
-            if(!name || !comp) return alert("Please enter your name and select a platform!");
+            if(!name || !comp) return alert("Jaza Jina na Chagua Kampuni!");
 
-            // Show Welcome Screen
             document.getElementById('login-card').style.display = 'none';
             document.getElementById('welcome-screen').style.display = 'block';
-            document.getElementById('welcome-msg').innerText = `WELCOME, ${name.toUpperCase()}`;
+            document.getElementById('welcome-msg').innerText = `HELLO, ${name.toUpperCase()}`;
             document.getElementById('target-comp').innerText = comp;
 
             setTimeout(() => {
                 document.getElementById('welcome-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('user-display').innerText = `USER: ${name}`;
-                document.getElementById('comp-display').innerText = `PLATFORM: ${comp}`;
+                document.getElementById('user-display').innerText = `👤 ${name}`;
+                document.getElementById('comp-display').innerText = `🎰 ${comp}`;
                 
-                // Initialize prediction data
-                for(let i=0; i<3; i++) upcoming.push(genX());
+                for(let i=0; i<3; i++) upcoming.push(generatePredatorX());
                 updateUI();
-                runEngine();
-            }, 3000);
+                engine();
+            }, 3500);
         }
 
-        function genX() {
+        // Realistic Odds Generator
+        function generatePredatorX() {
             let r = Math.random();
-            if(r > 0.96) return (Math.random() * 90 + 10).toFixed(2) + "x"; // Jackpot
-            if(r > 0.85) return (Math.random() * 9 + 1.5).toFixed(2) + "x"; // Mid
-            return (Math.random() * 1.5 + 1.1).toFixed(2) + "x"; // Low
+            if(r > 0.995) return (Math.random() * 500 + 500).toFixed(2) + "x"; // 500x to 1000x
+            if(r > 0.98) return (Math.random() * 400 + 100).toFixed(2) + "x"; // 100x to 500x
+            if(r > 0.95) return (Math.random() * 50 + 50).toFixed(2) + "x";  // 50x to 100x
+            if(r > 0.85) return (Math.random() * 10 + 2).toFixed(2) + "x";   // 2x to 12x
+            return (Math.random() * 1.5 + 1.01).toFixed(2) + "x";            // 1x to 2.5x
         }
 
         function updateUI() {
-            document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="history-val" style="color:var(--cyber-blue)">● ${x}</span>`).join('');
-            document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="history-val">○ ${x}</span>`).join('');
+            document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="hist-val" style="color:var(--cyber-blue)">▶ ${x}</span>`).join('');
+            document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="hist-val">✓ ${x}</span>`).join('');
         }
 
-        function runEngine() {
-            const mainX = document.getElementById('current-x');
-            const timeX = document.getElementById('next-time');
+        function engine() {
+            const displayX = document.getElementById('current-x');
+            const displayTime = document.getElementById('next-time');
             
-            let cur = upcoming.shift();
-            upcoming.push(genX());
-            
-            mainX.innerText = "WAITING";
-            mainX.style.color = "white";
+            let targetX = upcoming.shift();
+            upcoming.push(generatePredatorX());
 
+            displayX.innerText = "---";
+            displayX.style.color = "white";
+            displayTime.innerText = "READY FOR NEXT";
+
+            // Muda halisi wa kutoa signal
             setTimeout(() => {
-                mainX.innerText = cur;
-                mainX.style.color = "var(--predator-red)";
-                const d = new Date();
-                timeX.innerText = `NEXT ROUND: ${d.getHours()}:${d.getMinutes()}:${(d.getSeconds()+5).toString().padStart(2,'0')}`;
+                displayX.innerText = targetX;
+                displayX.style.color = "var(--predator-red)";
                 
-                history.push(cur);
+                const now = new Date();
+                // Tunaonyesha muda kamili wa mzunguko huu
+                displayTime.innerText = `TIME: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                
+                history.push(targetX);
                 updateUI();
-                
-                setTimeout(runEngine, 15000); // New signal every 15 seconds
+
+                // Mzunguko unaofuata baada ya sekunde 15 sawa na muda wa aviator
+                setTimeout(engine, 15000); 
             }, 3000);
         }
     </script>
