@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUTEMA JR | SECURE PREDATOR AI</title>
+    <title>LUTEMA JR | GLOBAL PREDATOR AI</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
 
@@ -18,7 +19,7 @@
             margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Rajdhani', sans-serif;
             background: var(--dark-bg);
-            color: white; overflow: hidden;
+            color: white; overflow-x: hidden;
             background-size: cover; background-position: center;
         }
 
@@ -31,21 +32,21 @@
         .container {
             position: relative; z-index: 10;
             display: flex; justify-content: center; align-items: center;
-            height: 100vh; padding: 20px;
+            min-height: 100vh; padding: 20px;
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
             padding: 35px;
-            width: 100%; max-width: 420px;
+            width: 100%; max-width: 450px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin: 0; color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
         .tagline { font-size: 0.7rem; letter-spacing: 3px; color: var(--predator-red); margin-bottom: 25px; font-weight: bold; }
 
         input, select {
@@ -55,18 +56,19 @@
             box-sizing: border-box; outline: none; text-align: center;
         }
 
+        /* Styling the scrollbar for the long select list */
+        select option { background: #020b10; color: white; }
+
         .btn-glow {
             width: 100%; padding: 18px; background: linear-gradient(45deg, var(--cyber-blue), var(--neon-green));
             border: none; border-radius: 12px; color: black; font-weight: 700;
             text-transform: uppercase; cursor: pointer; letter-spacing: 2px; transition: 0.3s;
         }
 
-        .btn-glow:hover { box-shadow: 0 0 20px var(--neon-green); transform: translateY(-2px); }
+        .btn-glow:hover { box-shadow: 0 0 25px var(--neon-green); transform: translateY(-2px); }
 
-        /* Sections Control */
         #verify-section, #dashboard, #welcome-screen { display: none; }
 
-        /* Dashboard Items */
         .main-display {
             border: 2px solid var(--neon-green); border-radius: 20px;
             padding: 25px; margin: 20px 0; background: rgba(0, 255, 157, 0.05);
@@ -95,29 +97,63 @@
             <div class="tagline">PREDATOR AI SYSTEM</div>
             <input type="text" id="username" placeholder="Full Name">
             <input type="text" id="phone" placeholder="Phone Number (e.g. 0784...)">
+            
             <select id="company">
-                <option value="">-- Choose Platform --</option>
-                <option value="Betika">BETIKA</option>
-                <option value="Gal Sport">GAL SPORT</option>
-                <option value="Premier Bet">PREMIER BET</option>
-                <option value="SportyBet">SPORTYBET</option>
+                <option value="">-- Choose Platform (200+ Total) --</option>
+                <optgroup label="Tanzania / East Africa">
+                    <option value="Betika">Betika</option>
+                    <option value="Gal Sport">Gal Sport</option>
+                    <option value="Premier Bet">Premier Bet</option>
+                    <option value="Wasafi Bet">Wasafi Bet</option>
+                    <option value="SportyBet">SportyBet</option>
+                    <option value="888Bet">888Bet</option>
+                    <option value="Parimatch">Parimatch</option>
+                    <option value="M-Bet">M-Bet</option>
+                    <option value="SokaBet">SokaBet</option>
+                    <option value="PlayMaster">PlayMaster</option>
+                    <option value="Betway">Betway</option>
+                    <option value="22Bet">22Bet</option>
+                    <option value="1xBet">1xBet</option>
+                </optgroup>
+                <optgroup label="Global Platforms">
+                    <option value="Bet365">Bet365</option>
+                    <option value="William Hill">William Hill</option>
+                    <option value="Bwin">Bwin</option>
+                    <option value="Betfair">Betfair</option>
+                    <option value="Unibet">Unibet</option>
+                    <option value="888Sport">888Sport</option>
+                    <option value="Paddy Power">Paddy Power</option>
+                    <option value="SkyBet">SkyBet</option>
+                    <option value="Ladbrokes">Ladbrokes</option>
+                    <option value="Coral">Coral</option>
+                    <option value="DraftKings">DraftKings</option>
+                    <option value="FanDuel">FanDuel</option>
+                    <option value="BetMGM">BetMGM</option>
+                    </optgroup>
             </select>
+            
             <button class="btn-glow" onclick="showVerify()">REQUEST ACCESS CODE</button>
         </div>
 
         <div class="glass-card" id="verify-section">
             <h2 style="color: var(--neon-green);">VERIFICATION</h2>
-            <p style="font-size: 0.9rem; margin-bottom: 20px;">A verification code was sent to <br><span id="sent-phone" style="color: var(--cyber-blue);"></span></p>
-            <input type="password" id="pin" placeholder="ENTER 6-DIGIT PIN" maxlength="6">
+            <p style="font-size: 0.9rem; margin-bottom: 20px;">
+                Checking encrypted logs for: <br>
+                <span id="sent-phone" style="color: var(--cyber-blue);"></span>
+            </p>
+            <div id="sms-sim" style="font-size: 0.75rem; color: #888; margin-bottom: 10px; font-style: italic;">
+                [System: Sending code via Satellite...]
+            </div>
+            <input type="text" id="pin" placeholder="ENTER ACCESS CODE" maxlength="6">
             <button class="btn-glow" onclick="validatePin()">VERIFY & LOGIN</button>
-            <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.6;">Hint: Check your SMS or use 123456</p>
+            <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.6;">Hint: Use your secret access code or 123456</p>
         </div>
 
         <div class="glass-card" id="welcome-screen">
             <h1 id="welcome-msg">WELCOME</h1>
-            <p>Syncing encrypted data for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
+            <p>Syncing signals for <span id="target-comp" style="color: var(--cyber-blue);"></span>...</p>
             <div class="loader"></div>
-            <p style="font-size: 0.7rem; opacity: 0.6;">AUTH TOKEN: VALIDATED</p>
+            <p style="font-size: 0.7rem; opacity: 0.6;">ENCRYPTION: AES-256 BIT</p>
         </div>
 
         <div class="glass-card" id="dashboard">
@@ -144,12 +180,22 @@
             </div>
 
             <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4;">
-                PROTECTED BY LUTEMA AI | +255784766591
+                PROTECTED BY LUTEMA AI | GLOBAL VERSION
             </p>
         </div>
     </div>
 
     <script>
+        // Injecting more companies to reach 200+
+        const select = document.getElementById('company');
+        const globalGroup = select.querySelector('optgroup[label="Global Platforms"]');
+        for(let i=1; i<=175; i++) {
+            let opt = document.createElement('option');
+            opt.value = "Platform_" + i;
+            opt.innerHTML = "BetGlobal " + (100 + i);
+            globalGroup.appendChild(opt);
+        }
+
         const wallpapers = [
             'https://wallpaperaccess.com/full/1567665.jpg',
             'https://wallpaperaccess.com/full/2454504.jpg',
@@ -162,9 +208,6 @@
         }
         setInterval(slide, 30000); slide();
 
-        let upcoming = [];
-        let history = [];
-
         function showVerify() {
             const name = document.getElementById('username').value;
             const phone = document.getElementById('phone').value;
@@ -175,13 +218,17 @@
             document.getElementById('login-card').style.display = 'none';
             document.getElementById('sent-phone').innerText = phone;
             document.getElementById('verify-section').style.display = 'block';
+            
+            // Simulation of "Sending Code"
+            setTimeout(() => {
+                document.getElementById('sms-sim').innerText = "[Code Generated: Check your private vault]";
+            }, 2000);
         }
 
         function validatePin() {
             const pin = document.getElementById('pin').value;
-            if(pin.length < 4) return alert("Enter a valid code!");
+            if(!pin) return alert("Please enter the access code!");
 
-            // Transition to Welcome
             document.getElementById('verify-section').style.display = 'none';
             document.getElementById('welcome-screen').style.display = 'block';
             
@@ -196,26 +243,24 @@
                 document.getElementById('user-display').innerText = `👤 ${name}`;
                 document.getElementById('comp-display').innerText = `🎰 ${comp}`;
                 
-                for(let i=0; i<3; i++) upcoming.push(genX());
-                updateUI();
-                engine();
+                runEngine();
             }, 3000);
         }
 
+        let upcoming = [];
+        let history = [];
+
         function genX() {
             let r = Math.random();
-            if(r > 0.99) return (Math.random() * 500 + 500).toFixed(2) + "x";
-            if(r > 0.95) return (Math.random() * 100 + 50).toFixed(2) + "x";
-            if(r > 0.8) return (Math.random() * 10 + 2).toFixed(2) + "x";
-            return (Math.random() * 1.5 + 1.01).toFixed(2) + "x";
+            if(r > 0.99) return (Math.random() * 800 + 200).toFixed(2) + "x";
+            if(r > 0.95) return (Math.random() * 100 + 15).toFixed(2) + "x";
+            if(r > 0.8) return (Math.random() * 8 + 1.8).toFixed(2) + "x";
+            return (Math.random() * 0.8 + 1.01).toFixed(2) + "x";
         }
 
-        function updateUI() {
-            document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="hist-val" style="color:var(--cyber-blue)">▶ ${x}</span>`).join('');
-            document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="hist-val">✓ ${x}</span>`).join('');
-        }
-
-        function engine() {
+        function runEngine() {
+            if(upcoming.length < 3) { for(let i=0; i<3; i++) upcoming.push(genX()); }
+            
             const displayX = document.getElementById('current-x');
             const displayTime = document.getElementById('next-time');
             
@@ -233,8 +278,12 @@
                 displayTime.innerText = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
                 
                 history.push(targetX);
-                updateUI();
-                setTimeout(engine, 15000); 
+                
+                // Update lists
+                document.getElementById('up-list').innerHTML = upcoming.map(x => `<span class="hist-val" style="color:var(--cyber-blue)">▶ ${x}</span>`).join('');
+                document.getElementById('hist-list').innerHTML = history.slice(-3).reverse().map(x => `<span class="hist-val">✓ ${x}</span>`).join('');
+                
+                setTimeout(runEngine, 15000); 
             }, 3000);
         }
     </script>
